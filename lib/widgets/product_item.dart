@@ -5,12 +5,14 @@ import '../screens/product_detail_screen.dart';
 class ProductItem extends StatelessWidget {
   final String id;
   final String title;
+  final double price;
   final String imageUrl;
 
   const ProductItem({
     super.key,
     required this.id,
     required this.title,
+    required this.price,
     required this.imageUrl,
   });
 
@@ -24,6 +26,20 @@ class ProductItem extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(5),
       child: GridTile(
+        header: Container(
+          color: Colors.black54,
+          width: double.infinity,
+          alignment: Alignment.center,
+          padding: const EdgeInsets.symmetric(vertical: 2),
+          child: Text(
+            title,
+            style: const TextStyle(
+              color: Colors.white,
+              fontFamily: 'Lato',
+              fontSize: 20,
+            ),
+          ),
+        ),
         footer: GridTileBar(
           backgroundColor: Colors.black87,
           leading: IconButton(
@@ -32,7 +48,7 @@ class ProductItem extends StatelessWidget {
             color: Theme.of(context).accentColor,
           ),
           title: Text(
-            title,
+            price.toStringAsFixed(3),
             textAlign: TextAlign.center,
           ),
           trailing: IconButton(

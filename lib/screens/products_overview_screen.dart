@@ -50,7 +50,7 @@ class ProductsOverviewScreen extends StatelessWidget {
         padding: const EdgeInsets.all(10.0),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
-          childAspectRatio: 3 / 2,
+          childAspectRatio: 3 / 3,
           crossAxisSpacing: 10,
           mainAxisSpacing: 10,
         ),
@@ -58,6 +58,7 @@ class ProductsOverviewScreen extends StatelessWidget {
         itemBuilder: (cntxt, index) => ProductItem(
           id: loadedProduct[index].id,
           title: loadedProduct[index].title,
+          price: loadedProduct[index].price,
           imageUrl: loadedProduct[index].imageUrl,
         ),
       ),
