@@ -7,7 +7,9 @@ import '../providers/products_provider.dart';
 import './product_item.dart';
 
 class ProductsGrid extends StatelessWidget {
-  const ProductsGrid({
+  final bool showOnlyFavorites;
+  const ProductsGrid(
+    this.showOnlyFavorites, {
     super.key,
   });
 
@@ -15,8 +17,14 @@ class ProductsGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     final ProductsProvider productsProvider =
         Provider.of<ProductsProvider>(context, listen: true);
-    final List<Product> products = productsProvider.items;
-
+    final List<Product> products = showOnlyFavorites == true
+        ? productsProvider.favoritesProduct
+        : productsProvider.items;
+    if (products.isEmpty == true) {
+      return const Center(
+        child: Text('No Favorit Product is Available.'),
+      );
+    }
     return GridView.builder(
       padding: const EdgeInsets.all(10.0),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -28,12 +36,7 @@ class ProductsGrid extends StatelessWidget {
       itemCount: products.length,
       itemBuilder: (cntxt, index) => ChangeNotifierProvider.value(
         value: products[index],
-        child: ProductItem(
-            // id: products[index].id,
-            // title: products[index].title,
-            // price: products[index].price,
-            // imageUrl: products[index].imageUrl,
-            ),
+        child: const ProductItem(),
       ),
     );
   }

@@ -3,21 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/product.dart';
+import '../providers/products_provider.dart';
 import '../screens/product_detail_screen.dart';
 
 class ProductItem extends StatelessWidget {
-  // final String id;
-  // final String title;
-  // final double price;
-  // final String imageUrl;
-
-  const ProductItem({
-    super.key,
-    // required this.id,
-    // required this.title,
-    // required this.price,
-    // required this.imageUrl,
-  });
+  const ProductItem({super.key});
 
   void _changeScreen(BuildContext cntxt, String id) {
     /// Go to Product Detail Screen.
@@ -29,7 +19,7 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Product product = Provider.of<Product>(context, listen: false);
+    final Product product = Provider.of<Product>(context, listen: true);
     return ClipRRect(
       borderRadius: BorderRadius.circular(5),
       child: GridTile(
@@ -53,6 +43,7 @@ class ProductItem extends StatelessWidget {
             builder: (cntxt, product1, child) => IconButton(
               onPressed: () {
                 product1.toggleFavoriteStatus();
+                Provider.of<ProductsProvider>(context, listen: false).refresh();
               },
               icon: Icon(product1.isFavorite == true
                   ? Icons.favorite
