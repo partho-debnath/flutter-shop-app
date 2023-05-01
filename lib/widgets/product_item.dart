@@ -1,22 +1,25 @@
 import 'package:flutter/material.dart';
 
+import 'package:provider/provider.dart';
+
+import '../providers/product.dart';
 import '../screens/product_detail_screen.dart';
 
 class ProductItem extends StatelessWidget {
-  final String id;
-  final String title;
-  final double price;
-  final String imageUrl;
+  // final String id;
+  // final String title;
+  // final double price;
+  // final String imageUrl;
 
   const ProductItem({
     super.key,
-    required this.id,
-    required this.title,
-    required this.price,
-    required this.imageUrl,
+    // required this.id,
+    // required this.title,
+    // required this.price,
+    // required this.imageUrl,
   });
 
-  void _changeScreen(BuildContext cntxt) {
+  void _changeScreen(BuildContext cntxt, String id) {
     /// Go to Product Detail Screen.
     Navigator.of(cntxt).pushNamed(
       ProductDetailScreen.routeName,
@@ -26,6 +29,7 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Product product = Provider.of<Product>(context, listen: false);
     return ClipRRect(
       borderRadius: BorderRadius.circular(5),
       child: GridTile(
@@ -35,7 +39,7 @@ class ProductItem extends StatelessWidget {
           alignment: Alignment.center,
           padding: const EdgeInsets.symmetric(vertical: 2),
           child: Text(
-            title,
+            product.title,
             style: const TextStyle(
               color: Colors.white,
               fontFamily: 'Lato',
@@ -45,13 +49,19 @@ class ProductItem extends StatelessWidget {
         ),
         footer: GridTileBar(
           backgroundColor: Colors.black87,
-          leading: IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.favorite),
-            color: Theme.of(context).accentColor,
+          leading: Consumer<Product>(
+            builder: (cntxt, product1, child) => IconButton(
+              onPressed: () {
+                product1.toggleFavoriteStatus();
+              },
+              icon: Icon(product1.isFavorite == true
+                  ? Icons.favorite
+                  : Icons.favorite_border),
+              color: Theme.of(context).accentColor,
+            ),
           ),
           title: Text(
-            price.toStringAsFixed(3),
+            product.price.toStringAsFixed(3),
             textAlign: TextAlign.center,
           ),
           trailing: IconButton(
@@ -62,9 +72,9 @@ class ProductItem extends StatelessWidget {
         ),
         child: InkWell(
           splashColor: Colors.grey,
-          onTap: () => _changeScreen(context),
+          onTap: () => _changeScreen(context, product.id),
           child: Image.network(
-            imageUrl,
+            product.imageUrl,
             fit: BoxFit.cover,
           ),
         ),
