@@ -18,7 +18,10 @@ class ProductItem extends StatelessWidget {
 
   void _changeScreen(BuildContext cntxt) {
     /// Go to Product Detail Screen.
-    Navigator.of(cntxt).pushNamed(ProductDetailScreen.routeName);
+    Navigator.of(cntxt).pushNamed(
+      ProductDetailScreen.routeName,
+      arguments: id,
+    );
   }
 
   @override
