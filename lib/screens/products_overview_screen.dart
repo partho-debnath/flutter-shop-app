@@ -27,7 +27,11 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
       appBar: AppBar(
         title: const Text('Shop'),
         actions: [
-          PopupMenuButton(
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.shopping_cart),
+          ),
+          PopupMenuButton<POPUPMENU>(
             icon: const Icon(Icons.more_vert),
             itemBuilder: (cntxt) => [
               const PopupMenuItem(
