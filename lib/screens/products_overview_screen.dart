@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
-import '../providers/products_provider.dart';
+import '../providers/cart.dart';
 import '../widgets/products_grid.dart';
+import '../widgets/badge.dart';
 
 enum POPUPMENU {
   favorite,
@@ -27,9 +28,15 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
       appBar: AppBar(
         title: const Text('Shop'),
         actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.shopping_cart),
+          Consumer<Cart>(
+            builder: (cntxt, cart, child) => MyBadge(
+              value: cart.totalItem,
+              child: child as Widget,
+            ),
+            child: IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.shopping_cart),
+            ),
           ),
           PopupMenuButton<POPUPMENU>(
             icon: const Icon(Icons.more_vert),
