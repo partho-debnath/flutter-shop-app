@@ -19,13 +19,20 @@ class CartScreen extends StatelessWidget {
       body: Column(
         children: <Widget>[
           Card(
+            elevation: 5,
             margin: const EdgeInsets.all(10.0),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  const Text('Total'),
+                  const Text(
+                    'Total',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   const Spacer(),
                   Chip(
                     label: Text('Tk ${cart.totalAmount.toStringAsFixed(2)}'),

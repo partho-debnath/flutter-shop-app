@@ -38,7 +38,11 @@ class CartItem extends StatelessWidget {
       ),
       direction: DismissDirection.endToStart,
       onDismissed: (direction) {
-        cart.removeItem(productId);
+        if (direction == DismissDirection.endToStart) {
+          cart.removeItem(productId);
+        } else if (direction == DismissDirection.startToEnd) {
+          debugPrint('-----------------------------------------------');
+        }
       },
       child: Card(
         elevation: 5,
