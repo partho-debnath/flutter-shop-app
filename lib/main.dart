@@ -10,6 +10,7 @@ import './screens/product_detail_screen.dart';
 import './screens/cart_screen.dart';
 import './screens/orders_screen.dart';
 import './screens/user_products_screen.dart';
+import './screens/edit_product_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -38,6 +39,26 @@ class MyApp extends StatelessWidget {
           // fontFamily: 'Anton',
           primarySwatch: Colors.purple,
           accentColor: Colors.amber,
+          inputDecorationTheme: InputDecorationTheme(
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide(
+                color: Theme.of(context).primaryColor,
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide(
+                color: Theme.of(context).primaryColor,
+              ),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide(
+                color: Theme.of(context).colorScheme.error,
+              ),
+            ),
+          ),
         ),
         initialRoute: ProductsOverviewScreen.routeName,
         routes: {
@@ -47,6 +68,7 @@ class MyApp extends StatelessWidget {
           CartScreen.routeName: (cntxt) => const CartScreen(),
           OrdersScreen.routeName: (cntxt) => const OrdersScreen(),
           UserProductsScreen.routeName: (cntxt) => const UserProductsScreen(),
+          EditProductScreen.routeName: (cntxt) => const EditProductScreen(),
         },
       ),
     );

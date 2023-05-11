@@ -31,16 +31,16 @@ class UserProductItem extends StatelessWidget {
               children: <Widget>[
                 IconButton(
                   onPressed: () {},
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.edit,
-                    color: Colors.green,
+                    color: Theme.of(context).primaryColor,
                   ),
                 ),
                 IconButton(
                   onPressed: () {},
                   icon: Icon(
                     Icons.delete,
-                    color: Theme.of(context).errorColor,
+                    color: Theme.of(context).colorScheme.error,
                   ),
                 ),
               ],
