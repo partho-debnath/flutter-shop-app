@@ -49,6 +49,16 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 ),
                 keyboardType: TextInputType.text,
                 textInputAction: TextInputAction.next,
+                validator: (value) {
+                  if (value == null || value.isEmpty == true) {
+                    return 'Please enter the title';
+                  } else if (value.length <= 5) {
+                    return 'The length of title must be 5 characters or more. But you entered ${value.length} characters.';
+                  } else if (value.length > 15) {
+                    return 'The length of title must be 15 characters or fewer. But uou entered ${value.length} characters.';
+                  }
+                  return null;
+                },
               ),
               const SizedBox(height: 12),
               TextFormField(
@@ -57,6 +67,17 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 ),
                 keyboardType: TextInputType.number,
                 textInputAction: TextInputAction.next,
+                validator: (value) {
+                  if (value == null || value.isEmpty == true) {
+                    return 'Please enter the price';
+                  } else if (double.tryParse(value) == null) {
+                    return 'Please enter valid number';
+                  } else if (double.parse(value) <= 0) {
+                    return 'Price should be greater than zero';
+                  }
+
+                  return null;
+                },
               ),
               const SizedBox(height: 12),
               TextFormField(
@@ -65,6 +86,16 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 ),
                 maxLines: 4,
                 keyboardType: TextInputType.multiline,
+                validator: (value) {
+                  if (value == null || value.isEmpty == true) {
+                    return 'Please enter the description';
+                  } else if (value.length <= 10) {
+                    return 'The length of description must be 10 characters or more. But you entered ${value.length} characters.';
+                  } else if (value.length > 30) {
+                    return 'The length of description must be 30 characters or fewer. But uou entered ${value.length} characters.';
+                  }
+                  return null;
+                },
               ),
               const SizedBox(height: 12),
               Row(
@@ -103,6 +134,15 @@ class _EditProductScreenState extends State<EditProductScreen> {
                       focusNode: imageURLFocusNode,
                       keyboardType: TextInputType.url,
                       textInputAction: TextInputAction.done,
+                      validator: (value) {
+                        if (value == null || value.isEmpty == true) {
+                          return 'Please enter image URL';
+                        } else if (value.startsWith('http') == false ||
+                            value.startsWith('https') == false) {
+                          return 'Please enter valid image URL';
+                        }
+                        return null;
+                      },
                     ),
                   ),
                 ],
