@@ -11,6 +11,7 @@ class EditProductScreen extends StatefulWidget {
 class _EditProductScreenState extends State<EditProductScreen> {
   final TextEditingController imageURLController = TextEditingController();
   final FocusNode imageURLFocusNode = FocusNode();
+  GlobalKey<FormState> _form = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -32,13 +33,36 @@ class _EditProductScreenState extends State<EditProductScreen> {
     }
   }
 
+  void _saveForm() {
+    if (_form.currentState!.validate() == false) {
+      return;
+    }
+    _form.currentState!.save();
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Item is added.'),
+        duration: Duration(seconds: 2),
+      ),
+    );
+    _form.currentState!.reset();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Edit Product'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              _saveForm();
+            },
+            icon: const Icon(Icons.add),
+          ),
+        ],
       ),
       body: Form(
+        key: _form,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
           child: ListView(
