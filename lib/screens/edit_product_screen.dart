@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/product.dart';
+import '../providers/products_provider.dart';
 
 class EditProductScreen extends StatefulWidget {
   static const String routeName = '/edit-product-screen';
@@ -12,6 +16,14 @@ class _EditProductScreenState extends State<EditProductScreen> {
   final TextEditingController imageURLController = TextEditingController();
   final FocusNode imageURLFocusNode = FocusNode();
   GlobalKey<FormState> _form = GlobalKey<FormState>();
+
+  Product product = Product(
+    id: '',
+    title: '',
+    price: 0,
+    description: '',
+    imageUrl: '',
+  );
 
   @override
   void initState() {
@@ -38,6 +50,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
       return;
     }
     _form.currentState!.save();
+    Provider.of<ProductsProvider>(context, listen: false).addProduct(product);
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text('Item is added.'),
@@ -57,7 +70,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
             onPressed: () {
               _saveForm();
             },
-            icon: const Icon(Icons.add),
+            icon: const Icon(Icons.save),
           ),
         ],
       ),
@@ -83,9 +96,19 @@ class _EditProductScreenState extends State<EditProductScreen> {
                   }
                   return null;
                 },
+                onSaved: (value) {
+                  product = Product(
+                    id: '',
+                    title: value as String,
+                    price: product.price,
+                    description: product.description,
+                    imageUrl: product.imageUrl,
+                  );
+                },
               ),
               const SizedBox(height: 12),
               TextFormField(
+                initialValue: '0.0',
                 decoration: const InputDecoration(
                   labelText: 'Price',
                 ),
@@ -97,10 +120,19 @@ class _EditProductScreenState extends State<EditProductScreen> {
                   } else if (double.tryParse(value) == null) {
                     return 'Please enter valid number';
                   } else if (double.parse(value) <= 0) {
-                    return 'Price should be greater than zero';
+                    return 'Please enter a number greater than zero';
                   }
 
                   return null;
+                },
+                onSaved: (value) {
+                  product = Product(
+                    id: '',
+                    title: product.title,
+                    price: double.parse(value as String),
+                    description: product.description,
+                    imageUrl: product.imageUrl,
+                  );
                 },
               ),
               const SizedBox(height: 12),
@@ -119,6 +151,15 @@ class _EditProductScreenState extends State<EditProductScreen> {
                     return 'The length of description must be 30 characters or fewer. But uou entered ${value.length} characters.';
                   }
                   return null;
+                },
+                onSaved: (value) {
+                  product = Product(
+                    id: '',
+                    title: product.title,
+                    price: product.price,
+                    description: value as String,
+                    imageUrl: product.imageUrl,
+                  );
                 },
               ),
               const SizedBox(height: 12),
@@ -152,7 +193,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                   Expanded(
                     child: TextFormField(
                       decoration: const InputDecoration(
-                        labelText: 'Image URL',
+                        labelText: 'Enter an image URL',
                       ),
                       controller: imageURLController,
                       focusNode: imageURLFocusNode,
@@ -160,12 +201,21 @@ class _EditProductScreenState extends State<EditProductScreen> {
                       textInputAction: TextInputAction.done,
                       validator: (value) {
                         if (value == null || value.isEmpty == true) {
-                          return 'Please enter image URL';
-                        } else if (value.startsWith('http') == false ||
+                          return 'Please enter an image URL';
+                        } else if (value.startsWith('http') == false &&
                             value.startsWith('https') == false) {
                           return 'Please enter valid image URL';
                         }
                         return null;
+                      },
+                      onSaved: (value) {
+                        product = Product(
+                          id: '',
+                          title: product.title,
+                          price: product.price,
+                          description: product.description,
+                          imageUrl: value as String,
+                        );
                       },
                     ),
                   ),
