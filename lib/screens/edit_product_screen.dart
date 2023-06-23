@@ -15,7 +15,8 @@ class EditProductScreen extends StatefulWidget {
 class _EditProductScreenState extends State<EditProductScreen> {
   final TextEditingController imageURLController = TextEditingController();
   final FocusNode imageURLFocusNode = FocusNode();
-  GlobalKey<FormState> _form = GlobalKey<FormState>();
+  final GlobalKey<FormState> _form = GlobalKey<FormState>();
+  bool init = true;
 
   Product product = Product(
     id: '',
@@ -29,6 +30,16 @@ class _EditProductScreenState extends State<EditProductScreen> {
   void initState() {
     imageURLFocusNode.addListener(previewImage);
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (init == true) {
+      String id = ModalRoute.of(context)!.settings.arguments as String;
+      init = false;
+    }
+
+    super.didChangeDependencies();
   }
 
   @override

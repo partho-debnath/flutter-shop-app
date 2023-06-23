@@ -38,7 +38,8 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           // fontFamily: 'Anton',
           primarySwatch: Colors.purple,
-          accentColor: Colors.amber,
+          colorScheme:
+              ColorScheme.fromSwatch().copyWith(secondary: Colors.amber),
           inputDecorationTheme: InputDecorationTheme(
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),

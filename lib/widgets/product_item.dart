@@ -50,7 +50,7 @@ class ProductItem extends StatelessWidget {
               icon: Icon(product1.isFavorite == true
                   ? Icons.favorite
                   : Icons.favorite_border),
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).colorScheme.secondary,
             ),
           ),
           title: Text(
@@ -75,7 +75,7 @@ class ProductItem extends StatelessWidget {
               );
             },
             icon: const Icon(Icons.shopping_cart),
-            color: Theme.of(context).accentColor,
+            color: Theme.of(context).colorScheme.secondary,
           ),
         ),
         child: InkWell(
